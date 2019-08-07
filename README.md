@@ -60,5 +60,5 @@ The application can optionally persist the state by calling `persistState()`.  I
 ## Building Tests
 Define an environment variable named DEPDIR that has dependencies installed in ./include and ./lib subdirectories.  I build them using [mason](https://github.com/mapbox/mason) install and link .
 ```
-DEPDIR=/path/to/mason_packages/.link cmake ..
+DEPDIR=/path/to/mason_packages/.link BOOST_ROOT=/path/to/mason_packages/.link cmake ..
 ```
