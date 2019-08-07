@@ -1,6 +1,6 @@
 # Conveyor C++ library : Efficient event cache for osquery
 
-The library was designed as a standalone replacement for the key-value storage scheme used for events in [osquery](https://github.com:osquery/osquery).  The actual format and encoding of the records is left to the application, the library treats all records as opaque std::string data.
+The library was designed as a standalone replacement for the key-value storage scheme used for events in [osquery](https://github.com/osquery/osquery).  The actual format and encoding of the records is left to the application, the library treats all records as opaque std::string data.
 Data is stored in a simple first-in-first-out (FIFO) scenario, with separate read and write 'cursors'.  Application can choose to read the stored records multiple times before advancing the read cursor and effectively 'discarding' the read records.  When all records in a file have been discarded, the file gets deleted from disk.
 
 ## IDs and Timestamps
