@@ -14,6 +14,7 @@
 #define READ _read
 #define LSEEK _lseek
 #else
+#define O_BINARY  0       // empty for non-windows
 #define CLOSE close
 #define WRITE write
 #define READ read
@@ -341,7 +342,9 @@ struct ConveyorImpl : public Conveyor {
           continue;
         }
       }
-
+	  if (idx == _writePos.fileIndex) {
+		  continue;
+	  }
       _cleanupFile(f);
     }
 
@@ -608,7 +611,7 @@ protected:
 
     // open file
 
-    int fd = open(f.path.c_str(), O_RDONLY /* O_BINARY */);
+    int fd = open(f.path.c_str(), O_RDONLY | O_BINARY );
     if (fd <= 0) {
       return true;
     }
@@ -836,7 +839,7 @@ protected:
 
     if (doAppend) {
       // open existing
-      _writeFd = open(f.path.c_str(), O_WRONLY | O_APPEND, 0660 ); // TODO: O_BINARY on windows
+      _writeFd = open(f.path.c_str(), O_WRONLY | O_APPEND | O_BINARY, 0660 );
       if (_writeFd <= 0) {
         _errs = ("unable to open file for writing:" + f.path);
       } else {
@@ -844,7 +847,7 @@ protected:
       }
     } else {
       // create new
-      _writeFd = open(f.path.c_str(), O_WRONLY | O_CREAT, 0660 ); // TODO: O_BINARY on windows
+      _writeFd = open(f.path.c_str(), O_WRONLY | O_CREAT | O_BINARY, 0660 );
       if (_writeFd <= 0) {
         _errs = ("unable to open file for writing:" + f.path);
       } else {
